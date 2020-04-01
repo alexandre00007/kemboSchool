@@ -4,6 +4,9 @@ from __future__ import unicode_literals
 from Backend.models import MySchoolUser
 from Backend.models import MySchoolMenu
 from Backend.models import MySchoolSousMenu
+from Backend.models import RelationUserProfil
+from Backend.models import MySchoolApp
+
 
 
 class dao_menu(object):
@@ -13,6 +16,31 @@ class dao_menu(object):
         try:
             utilisateur = MySchoolUser.objects.filter(utilisateur=id)
             print("Utilisateur __id",utilisateur)
-            return utilisateur
+            for userId in utilisateur:
+                idUser=userId.id
+            return idUser
         except Exception as e:
-            print("IL Y A PAS D'UTILISATION AVEC CETTE IDENTIFIANT",e)
+            print("IL Y A PAS D'UTILISATEUR AVEC CETTE IDENTIFIANT",e)
+            return None
+    @staticmethod
+    def getapps(user_id):
+        try:
+            list_ = []
+            for p in RelationUserProfil.objects.filter(user=user_id):
+                for ap in MySchoolApp.objects.filter(myschoolprofil=p.profil.id):
+                    list_.append(ap)
+            return list_
+        except Exception as e:
+            print("IL Y A PAS D'APPLICATIONS", e)
+            return None
+
+    @staticmethod
+    def getprofils(user_id):
+        try:
+            list_ = []
+            for p in RelationUserProfil.objects.filter(user=user_id):
+               list_.append(p)
+            return list_
+        except Exception as e:
+            print("IL Y A PAS D'APPLICATIONS", e)
+            return None

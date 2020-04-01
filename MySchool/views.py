@@ -14,11 +14,14 @@ def MySchoolAccueil(request):
         if request.user.is_authenticated:
             dash_board = 'tableau de bord stock'
             getuser_id=request.user.id
-            userObject = dao_menu.getUtilisateur(getuser_id)
+            userId= dao_menu.getUtilisateur(getuser_id)
+            lesApp = dao_menu.getapps(userId)
+            lesProfils = dao_menu.getprofils(userId)
             #template = loader.get_template('aSideTop/Layout.html')
             context = {
                 'index': 'Dashboard',
-                'getuser': userObject,                
+                'getapps': lesApp,
+                'profils': lesProfils
             }
             template = loader.get_template('MySchool/index.html')
             return HttpResponse(template.render(context, request))

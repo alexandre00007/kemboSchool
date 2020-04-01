@@ -22,9 +22,14 @@ class MySchoolUser(ModelForTime):
     def __str__(self):
         return self.titre
 
+class RelationUserProfil(models.Model):
+    profil = models.ForeignKey('MySchoolProfil', blank=True, null=True,on_delete=models.CASCADE, related_name="MySchoolUser_set")
+    user = models.ForeignKey('MySchoolUser', blank=True, null=True,on_delete=models.CASCADE, related_name="MySchoolProfil_set")
+
+    def __str__(self):
+        return str(self.profil)
 
 class MySchoolProfil (ModelForTime):
-    myschool = models.ForeignKey('MySchoolUser', blank=True, null=True, on_delete=models.CASCADE, related_name="MySchoolUser_set")
     titre = models.CharField(max_length=100, null=True, blank=True)
     niveau = models.CharField(max_length=200, null=True, blank=True)
 
