@@ -13,6 +13,21 @@ class ModelForTime(models.Model):
 
     class Meta:
         abstract = True
+class MySchoolSchool(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+    def __str__(self):
+        return self.name
+
+#ici le user doit d'abord faire partie de l'ecole après il peut etre assigner à un profil "RelationUserProfil"
+#parceque avant d'assigner 'un profil à un user, on doit d'abor selectionner tous les user lier à l'ecole 
+class RelationSchoolUser(ModelForTime):
+    school = models.ForeignKey('MySchoolSchool', blank=True, null=True,on_delete=models.CASCADE, related_name="MySchoolSchool_set")
+    schooluser = models.ForeignKey('MySchoolUser', blank=True, null=True,on_delete=models.CASCADE, related_name="myschoolschoolSet_r")
+    # inscrit, Renvoyer,quiter.
+    etat = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.schooluser)
 
 
 class MySchoolUser(ModelForTime):
@@ -24,8 +39,8 @@ class MySchoolUser(ModelForTime):
 
 class RelationUserProfil(models.Model):
     profil = models.ForeignKey('MySchoolProfil', blank=True, null=True,on_delete=models.CASCADE, related_name="MySchoolUser_set")
-    user = models.ForeignKey('MySchoolUser', blank=True, null=True,on_delete=models.CASCADE, related_name="MySchoolProfil_set")
-
+    user = models.ForeignKey('MySchoolUser', blank=True, null=True,on_delete=models.CASCADE, related_name="myschooluserSet")
+    school = models.ForeignKey('MySchoolSchool', blank=True, null=True,on_delete=models.CASCADE, related_name="myschoolschoolSet")
     def __str__(self):
         return str(self.profil)
 
