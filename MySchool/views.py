@@ -12,16 +12,21 @@ from django.urls import reverse_lazy, reverse
 def MySchoolAccueil(request):
     try:
         if request.user.is_authenticated:
-            dash_board = 'tableau de bord stock'
+            #recuperation de l'idUser Connecter
             getuser_id=request.user.id
+            #recuperation de l'utilisateur dans le Système
             userId= dao_menu.getUtilisateur(getuser_id)
+            #recuperateur des application
             lesApp = dao_menu.getapps(userId)
+            #recuperation du profil User
             lesProfils = dao_menu.getprofils(userId)
-            #template = loader.get_template('aSideTop/Layout.html')
+            #recuperer l'ecole
+            ecole = dao_menu.getschool(userId)
             context = {
                 'index': 'Dashboard',
                 'getapps': lesApp,
-                'profils': lesProfils
+                'profils': lesProfils,
+                'ecole': ecole
             }
             template = loader.get_template('MySchool/index.html')
             return HttpResponse(template.render(context, request))

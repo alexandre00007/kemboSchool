@@ -44,3 +44,13 @@ class dao_menu(object):
         except Exception as e:
             print("IL Y A PAS D'APPLICATIONS", e)
             return None
+    
+    @staticmethod
+    def getschool(user_id):
+        try:
+            for p in RelationUserProfil.objects.filter(user=user_id):
+                school=p.school
+            return school
+        except Exception as e:
+            print("PAS D'ECOLE", e)
+            return None
