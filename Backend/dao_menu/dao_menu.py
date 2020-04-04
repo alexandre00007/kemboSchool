@@ -52,5 +52,5 @@ class dao_menu(object):
                 school=p.school
             return school
         except Exception as e:
-            print("PAS D'ECOLE", e)
+            print("PAS D'ECOLE ,IL N'EST INSCRIT", e)
             return None
